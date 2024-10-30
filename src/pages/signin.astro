@@ -19,4 +19,37 @@ import Layout from "../layouts/Layout.astro";
             <button type="submit"> sign in </button>
         </div>
     </form>
+
+    <script>
+        import { getAuth, inMemoryPersistence, signInWithEmailAndPassword} from 'firebase/auth'
+        import { app } from '../firebase/client'
+
+        const auth = getAuth(app)
+
+        auth.setPersistence(inMemoryPersistence)
+
+        const form = document.querySelector("form")
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault()
+            const formData = new FormData(form)
+            const email = formData.get('email')?.toString()
+            const password = formData.get('password')?.toString()
+
+            if(!email || !password) {
+                return;
+            }
+            const passwordCredential= await signInWithEmailAndPassword(auth, email, password)
+            const idToken = await passwordCredential.user.getIdToken()
+            const response = await fetch ("api/auth/signin", {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${idToken}`
+                }
+            })
+
+            if (response.redirected) {
+                window.location.assign(response.url)
+            }
+        })
+    </script>
 </Layout>

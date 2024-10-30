@@ -6,7 +6,7 @@ import Layout from "../layouts/Layout.astro";
     <a href="/">home</a>
     <h1>register</h1>
 
-    <form action="">
+    <form action="/api/auth/register" method="post">
         <div>
             <label for="name">nombre</label>
             <input type="text" name="name" id="name" />
