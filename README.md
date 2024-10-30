@@ -1,47 +1,43 @@
-# Astro Starter Kit: Minimal
 
-```sh
-npm create astro@latest -- --template minimal
+# Hibrid Express Astro
+
+Esta plantilla de ejemplo muestra el funcionamiento de Firebase Auth en Astro. cuenta con sistema de login ya sea a travez de Password usando signInWithEmailAndPassword como signInWithPopup. la creación del usuario funciona usando Firebase-admin.
+
+
+## Tech Stack
+
+
+   ![Astro](https://img.shields.io/badge/astro-%23ff5a03.svg?style=for-the-badge&logo=astro&logoColor=white)
+
+   ![JavaScript](https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=000)
+
+
+## Como usar
+
+Crea la carpeta de tu nuevo proyecto.
+
+```bash
+  mkdir new-project
+```
+Clona HEA en la carpeta del nuevo proyecto.
+
+```bash
+  cd new-project
+  git clone https://github.com/dynecore/hibrid-express-astro .
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
+Instala las dependencias.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```bash
+  npm install
 ```
+El proyecto no incluye una demo compilada de astro asi que debes hacer build. los archivos de Astro se encuentran en su carpeta respectiva.
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+```bash
+  npm run build
+```
+Inicia el servidor
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+```bash
+  npm run start
+```
