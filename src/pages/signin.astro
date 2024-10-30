@@ -1,5 +1,17 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import { app } from "../firebase/server"
+import {getAuth} from 'firebase-admin/auth'
+import Layout from "../layouts/Layout.astro"
+
+const auth = getAuth(app)
+
+if (Astro.cookies.has('__session')){
+    const sessionCookie = Astro.cookies.get('__session')?.value
+    const decodedCookie = await auth.verifySessionCookie(sessionCookie || "")
+    if (decodedCookie){
+        return Astro.redirect('/dashboard')
+    }
+}
 ---
 
 <Layout>
@@ -19,9 +31,14 @@ import Layout from "../layouts/Layout.astro";
             <button type="submit"> sign in </button>
         </div>
     </form>
+    <div>
+        <button type="button" id="googleBtn">
+            sign in with popup (google)
+        </button>
+    </div>
 
     <script>
-        import { getAuth, inMemoryPersistence, signInWithEmailAndPassword} from 'firebase/auth'
+        import { getAuth, inMemoryPersistence, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
         import { app } from '../firebase/client'
 
         const auth = getAuth(app)
@@ -51,5 +68,29 @@ import Layout from "../layouts/Layout.astro";
                 window.location.assign(response.url)
             }
         })
+
+        const googleBtn = document.getElementById('googleBtn')
+        googleBtn.addEventListener('click', async () => {
+            const provider = new GoogleAuthProvider()
+
+            try {
+                const googleCredential = await signInWithPopup(auth, provider)
+                const idToken = await googleCredential.user.getIdToken()
+
+                const response = await fetch("api/auth/signin", {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${idToken}`
+                    }
+                })
+
+                if (response.redirected) {
+                    window.location.assign(response.url)
+                }
+            } catch (error) {
+                console.error("Error during Google sign-in:", error)
+            }
+        })
+
     </script>
 </Layout>
